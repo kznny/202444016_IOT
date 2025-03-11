@@ -1,0 +1,56 @@
+#define TRIG 13
+#define ECHO 12
+
+int led_R = 7;
+int led_G = 8;
+void setup()
+{
+    Serial.begin(9600);
+    pinMode(led_R, OUTPUT);
+    pinMode(led_G, OUTPUT);
+    pinMode(TRIG, OUTPUT);
+    pinMode(ECHO, INPUT);
+}
+
+void loop()
+{
+    long duration, distance;
+
+    digitalWrite(TRIG, LOW);
+    delayMicroseconds(2);
+    digitalWrite(TRIG, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIG, LOW);
+
+    duration = pulseln(ECHO,HIGH);
+    distance = duration /58.2;
+
+    Serial.println(distance);
+    Serial.println(" Cm");
+    delay(1000);
+
+    if (distance >=100)
+    {
+        digitalWrite(led_R, HIGH);
+        digitalWrite(led_G, LOW);
+    }
+    else
+    {
+        digitalWrite(led_G, HIGH);
+        digitalWrite(led_R, LOW);
+    }
+    delay(1000);
+
+}
+
+
+    /*
+    digitalWrite(led_R, HIGH);
+    delay(1000);
+    digitalWrite(led_R, LOW);
+    delay(1000);
+    digitalWrite(led_G, HIGH);
+    delay(1000);
+    digitalWrite(led_G, LOW);
+    delay(1000);    
+    */
